@@ -3,7 +3,8 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import React from 'react';
 
-import SearchIcon from '@mui/icons-material/Search';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
@@ -44,8 +45,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Home() {
   const [plate, setPlate] = React.useState('');
   const [videos, setVideos] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   const searchPlate = () => {
+    setLoading(true);
     fetch(`${process.env.NEXT_PUBLIC_API}/api/cars/find`, {
       method: 'POST',
       headers: {
@@ -55,6 +58,7 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((data) => {
+        setLoading(false);
         if (data.records) {
           setVideos(data.records);
         }
@@ -79,8 +83,13 @@ export default function Home() {
         <header className={styles.header}>
           <h1>TRAFİKTEKİ ARABALAR</h1>
         </header>
+
+        <a href="mailto:carsintraffichelp@gmail.com" className={styles.contact}>İletişim</a>  
       </div>
-      <p className={styles.description}>Trafikte yaşanan vur kaç, kavga, saldırı veya hatalı sürüş gibi davranışların sosyal medya üzerinde açık olarak paylaşılan videoların kayıt altında tutulduğu platform. Bizimle paylaşmak istediğiniz araç videosu var ise iletişim üzerinden bize gönderebilirsiniz.</p>
+      <p className={styles.description}>
+        Trafikte yaşanan vur kaç, kavga, saldırı veya hatalı sürüş gibi davranışların sosyal medya
+         üzerinde açık olarak paylaşılan videoların kayıt altında tutulduğu platform. Bizimle paylaşmak
+          istediğiniz araç videosu veya videolar ile ilgili bir sorunuz var ise iletişim üzerinden bize gönderebilirsiniz.</p>
       <Search>
         <StyledInputBase
           placeholder="34 EBC 123"
@@ -97,6 +106,11 @@ export default function Home() {
       </Search>
 
       <VideoList videoList={videos} />
+
+      {loading &&
+        <Box sx={{ display: 'flex', placeContent: 'center' }}>
+          <CircularProgress />
+        </Box>}
 
     </div>
   )

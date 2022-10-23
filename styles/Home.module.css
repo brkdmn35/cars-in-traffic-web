@@ -8,8 +8,19 @@
 
 
 .wrapper {
+  position: relative;
   max-width: 820px;
   margin: 0 auto;
+}
+
+.contact {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.05);
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 15px;
 }
 
 
