@@ -27,7 +27,7 @@ const VideoList = ({ videoList }) => {
                 spacing={2}
             >
                 {videoList.map((video) =>
-                    <Grid item xs={12} md={3} justifyContent="center">
+                    <Grid item xs={12} md={3} justifyContent="center" key={'videoCard' + video.plate}>
                         <Card component="li" sx={{ maxWidth: 300, flexGrow: 1, cursor: 'pointer', margin: 'auto' }} onClick={() => { setSelectedModal(video) }}>
                             <CardCover>
                                 <video
